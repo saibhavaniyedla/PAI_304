@@ -1,0 +1,24 @@
+
+# Bayesian Network for loan default prediction
+from pgmpy.models import DiscreteBayesianNetwork
+from pgmpy.factors.discrete import TabularCPD
+from pgmpy.inference import VariableElimination
+
+# Define structure
+model = DiscreteBayesianNetwork([('Income', 'Default'), ('Credit', 'Default')])
+
+# Define CPDs
+cpd_income = TabularCPD('Income', 2, [[0.6], [0.4]])
+cpd_credit = TabularCPD('Credit', 2, [[0.7], [0.3]])
+cpd_default = TabularCPD('Default', 2,
+                         [[0.95,0.8,0.9,0.5],
+                          [0.05,0.2,0.1,0.5]],
+                         evidence=['Income','Credit'], evidence_card=[2,2])
+
+# Add CPDs
+model.add_cpds(cpd_income, cpd_credit, cpd_default)
+
+# Inference
+infer = VariableElimination(model)
+query_result = infer.query(['Default'], evidence={'Income':1,'Credit':0})
+print(query_result)
