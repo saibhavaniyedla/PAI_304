@@ -27,14 +27,13 @@ def move(state, action):
 
     return (i, j)
 
-# ✅ FIXED REWARD FUNCTION
 def reward(state):
     if state == goal:
-        return 10        # 🔥 Positive reward
+        return 10       
     elif state == trap:
-        return -10       # 🔥 Negative reward
+        return -10      
     else:
-        return -1        # Step cost
+        return -1        
 
 # VALUE ITERATION
 def value_iteration():
@@ -67,7 +66,6 @@ def value_iteration():
 
         V = new_V
 
-        # 🔥 Smaller epsilon for proper convergence
         if delta < 0.0001:
             break
 
