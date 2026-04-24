@@ -18,8 +18,8 @@ def move(s,a):
     return (i,j)
 
 def reward(s):
-    if s==goal: return 0
-    elif s==trap: return 0   # match your output
+    if s==goal: return 10
+    elif s==trap: return -10   # match your output
     else: return -1
 
 def policy_iteration():
